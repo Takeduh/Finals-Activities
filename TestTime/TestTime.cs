@@ -11,49 +11,46 @@ namespace TestTime
             this.minutes = 60 * hh + mm;
         }
 
+        // Read-only property Hour returning the number of hours
+        public int Hour
+        {
+            get { return minutes / 60; }
+        }
+
+        // Read-only property Minute returning the number of minutes
+        public int Minute
+        {
+            get { return minutes % 60; }
+        }
+
         public override String ToString()
         {
-            // Format as HH:MM
-            int hours = minutes / 60;
-            int mins = minutes % 60;
-            return $"{hours:D2}:{mins:D2}";
+            // Format as hh:mm with leading zeros using String.Format
+            return String.Format("{0:D2}:{1:D2}", Hour, Minute);
         }
     }
 
-    class TestTime
+    class Program
     {
         static void Main(string[] args)
         {
             // Declare variables of type Time
             Time morning = new Time(10, 5);    // 10:05
             Time midnight = new Time(0, 45);   // 00:45
+            Time evening = new Time(23, 45);   // 23:45
 
-            // Print the Time values
+            // Print the Time values using the formatted ToString()
             Console.WriteLine("Morning time: " + morning);
             Console.WriteLine("Midnight time: " + midnight);
+            Console.WriteLine("Evening time: " + evening);
 
-            // If you want to keep the original functionality from the exercise
-            // that just returns minutes, you could use this alternative struct:
+            // Access and print Hour and Minute properties
+            Console.WriteLine("Evening hour: " + evening.Hour);
+            Console.WriteLine("Evening minute: " + evening.Minute);
 
-            // Using the original Time struct from the exercise
-            OriginalTime originalMorning = new OriginalTime(10, 5);
-            Console.WriteLine("Original format (minutes only): " + originalMorning);
-        }
-    }
-
-    // This is the original struct from the exercise description
-    public struct OriginalTime
-    {
-        private readonly int minutes;
-
-        public OriginalTime(int hh, int mm)
-        {
-            this.minutes = 60 * hh + mm;
+            // Verify example from the requirements
+            Console.WriteLine("For Time(23, 45), Minute is: " + evening.Minute);
         }
 
-        public override String ToString()
-        {
-            return minutes.ToString();
-        }
     }
 }
